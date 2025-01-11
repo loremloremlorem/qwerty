@@ -11,7 +11,7 @@ urlpatterns = [
     path('orders/', OrderAPIView.as_view(), name='api_orders'),
     # Удаление заказа
     path('orders/delete/<int:order_id>/', OrderDeleteAPIView.as_view(), name='api_order_delete'),
-    path('login/', LoginAPIView.as_view(), name='api_login'),
+    path('login/', LoginWithCSRFAPIView.as_view(), name='api_login'),
 
 ]
 

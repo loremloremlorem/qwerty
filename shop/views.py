@@ -77,6 +77,9 @@ def order_history(request):
     orders = Order.objects.filter(user=request.user)
     return render(request, 'shop/order/history.html', {'orders': orders})
 
+from django.middleware.csrf import get_token
+
+
 
 
 def register(request):
@@ -84,11 +87,8 @@ def register(request):
         username = request.POST['username']
         
         password = request.POST['password']
-        password_confirm = request.POST['password_confirm']
 
-        if password != password_confirm:
-            messages.error(request, "Пароли не совпадают!")
-            return redirect('register')
+
 
         if User.objects.filter(username=username).exists():
             messages.error(request, "Имя пользователя уже занято!")
@@ -253,21 +253,24 @@ class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
             return [IsAdminUser()]
         return [AllowAny()]
 
-class LoginAPIView(APIView):
+
+
+class LoginWithCSRFAPIView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
-        """Вход пользователя и получение токенов."""
+        """Вход пользователя с использованием CSRF."""
         username = request.data.get('username')
         password = request.data.get('password')
-        
 
         # Проверяем учетные данные
         user = authenticate(username=username, password=password)
         if user is not None:
-            # Генерация токенов доступа
-            refresh = RefreshToken.for_user(user)
+            login(request, user)  # Вход пользователя
+            csrf_token = get_token(request)  # Генерация нового CSRF-токена
             return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
+                'message': 'Успешный вход',
+                'csrf_token': csrf_token
             }, status=HTTP_200_OK)
         else:
             return Response(
