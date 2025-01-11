@@ -1,10 +1,9 @@
 from django.contrib.auth.models import User
-from django.contrib.auth import login
-from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Order, OrderItem
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
 from .models import Category, Product
 from .models import Product, CartItem
@@ -13,6 +12,7 @@ from .models import Product, Category, CartItem, Order
 from .serializers import ProductSerializer, CategorySerializer, CartItemSerializer, OrderSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
 
 @login_required
 def product_list(request, category_slug=None):
@@ -249,3 +249,25 @@ class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
             return [IsAdminUser()]
         return [AllowAny()]
+
+class LoginAPIView(APIView):
+    def post(self, request):
+        """Вход пользователя и получение токенов."""
+        username = request.data.get('username')
+        password = request.data.get('password')
+        password_confirmation = request.data.get('password_confirmation')
+
+        # Проверяем учетные данные
+        user = authenticate(username=username, password=password, password_confirmation=password_confirmation)
+        if user is not None:
+            # Генерация токенов доступа
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=HTTP_200_OK)
+        else:
+            return Response(
+                {'error': 'Неверное имя пользователя или пароль'},
+                status=HTTP_400_BAD_REQUEST
+            )

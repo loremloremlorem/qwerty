@@ -12,11 +12,6 @@ urlpatterns = [
     path('<slug:category_slug>/', views.product_list, name='product_list_by_category'),
     path('<int:id>/<slug:slug>/', views.product_detail, name='product_detail'),
     path('orders/', views.order_history, name='order_history'),
-]
-
-
-
-urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='shop/auth/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('register/', views.register, name='register'),
