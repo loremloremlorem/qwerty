@@ -52,7 +52,6 @@ CSRF_TRUSTED_ORIGINS = [
 
 INSTALLED_APPS = [
     'drf_yasg',
-    'rest_framework_swagger',
     'corsheaders',
     'shop',
     'rest_framework',
