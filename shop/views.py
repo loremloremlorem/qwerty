@@ -11,6 +11,7 @@ from rest_framework import generics
 from .models import Product, Category, CartItem, Order
 from .serializers import ProductSerializer, CategorySerializer, CartItemSerializer, OrderSerializer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, AllowAny
 
 @login_required
 def product_list(request, category_slug=None):
@@ -54,9 +55,9 @@ def cart_detail(request):
 def checkout(request):
     cart_items = CartItem.objects.filter(user=request.user)
     if not cart_items.exists():
-        return redirect('cart_detail')  # Корзина пуста
+        return redirect('cart_detail')  
 
-    order = Order.objects.create(user=request.user, paid=True)  # Платёж 
+    order = Order.objects.create(user=request.user, paid=True) 
     for item in cart_items:
         OrderItem.objects.create(
             order=order,
@@ -64,7 +65,7 @@ def checkout(request):
             price=item.product.price,
             quantity=item.quantity
         )
-    cart_items.delete()  # Очистка корзины
+    cart_items.delete() 
     return render(request, 'shop/order/confirmation.html', {'order': order})
 
 @login_required
@@ -90,7 +91,7 @@ def register(request):
             return redirect('register')
 
         user = User.objects.create_user(username=username, email=email, password=password)
-        login(request, user)  # Автоматически авторизуем пользователя
+        login(request, user)
         return redirect('/')
 
     return render(request, 'shop/auth/register.html')
@@ -147,3 +148,23 @@ class OrderListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+
+class CategoryListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            return [IsAdminUser()]
+        return [AllowAny()]
+
+class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+    def get_permissions(self):
+        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+            return [IsAdminUser()]
+        return [AllowAny()]
