@@ -46,6 +46,10 @@ SWAGGER_SETTINGS = {
 }
 # Application definition
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+]
+
 INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework_swagger',
