@@ -79,7 +79,7 @@ def order_history(request):
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
-        email = request.POST['email']
+        
         password = request.POST['password']
         password_confirm = request.POST['password_confirm']
 
@@ -91,7 +91,7 @@ def register(request):
             messages.error(request, "Имя пользователя уже занято!")
             return redirect('register')
 
-        user = User.objects.create_user(username=username, email=email, password=password)
+        user = User.objects.create_user(username=username,  password=password)
         login(request, user)
         return redirect('/')
 
@@ -255,7 +255,7 @@ class LoginAPIView(APIView):
         """Вход пользователя и получение токенов."""
         username = request.data.get('username')
         password = request.data.get('password')
-        password_confirmation = request.data.get('password_confirmation')
+        
 
         # Проверяем учетные данные
         user = authenticate(username=username, password=password)
