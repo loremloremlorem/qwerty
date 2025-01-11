@@ -258,7 +258,7 @@ class LoginAPIView(APIView):
         password_confirmation = request.data.get('password_confirmation')
 
         # Проверяем учетные данные
-        user = authenticate(username=username, password=password, password_confirmation=password_confirmation)
+        user = authenticate(username=username, password=password)
         if user is not None:
             # Генерация токенов доступа
             refresh = RefreshToken.for_user(user)
