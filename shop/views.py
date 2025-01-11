@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import Order, OrderItem
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
 from .models import Category, Product
 from .models import Product, CartItem
 from rest_framework import generics
@@ -141,6 +142,86 @@ class CartAPIView(APIView):
             return Response({'message': 'Item added to cart'}, status=HTTP_200_OK)
         except Product.DoesNotExist:
             return Response({'error': 'Product not found'}, status=HTTP_400_BAD_REQUEST)
+    def delete(self, request):
+        """Удаление товара из корзины или очистка корзины."""
+        product_id = request.data.get('product_id')
+
+    
+        if product_id:
+            try:
+                cart_item = CartItem.objects.get(user=request.user, product_id=product_id)
+                cart_item.delete()
+                return Response({'message': 'Товар удалён из корзины'}, status=HTTP_204_NO_CONTENT)
+            except CartItem.DoesNotExist:
+                return Response({'error': 'Товар в корзине не найден'}, status=HTTP_400_BAD_REQUEST)
+
+
+        CartItem.objects.filter(user=request.user).delete()
+        return Response({'message': 'Корзина очищена'}, status=HTTP_204_NO_CONTENT)
+
+
+
+class OrderDeleteAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, order_id=None):
+        """Удаление заказа по ID."""
+        if not order_id:
+            return Response(
+                {'error': 'Не указан ID заказа'},
+                status=HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            # Получаем заказ по ID
+            order = Order.objects.get(id=order_id)
+
+            # Проверяем, что пользователь - владелец заказа или администратор
+            if order.user != request.user and not request.user.is_staff:
+                return Response(
+                    {'error': 'Вы не можете удалить этот заказ'},
+                    status=HTTP_400_BAD_REQUEST
+                )
+
+            # Проверяем, что заказ не оплачен
+            if order.paid:
+                return Response(
+                    {'error': 'Нельзя удалить оплаченный заказ'},
+                    status=HTTP_400_BAD_REQUEST
+                )
+
+            # Удаляем заказ
+            order.delete()
+            return Response(
+                {'message': 'Заказ удалён'},
+                status=HTTP_204_NO_CONTENT
+            )
+
+        except Order.DoesNotExist:
+            return Response(
+                {'error': 'Заказ не найден'},
+                status=HTTP_400_BAD_REQUEST
+            )
+
+class OrderAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, order_id=None):
+        """Получение заказов пользователя или конкретного заказа."""
+        if order_id:
+            try:
+                order = Order.objects.get(id=order_id, user=request.user)
+                serializer = OrderSerializer(order)
+                return Response(serializer.data, status=200)
+            except Order.DoesNotExist:
+                return Response({'error': 'Заказ не найден'}, status=400)
+
+        # Список всех заказов пользователя
+        orders = Order.objects.filter(user=request.user)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data, status=200)
+
+
 
 class OrderListAPIView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
