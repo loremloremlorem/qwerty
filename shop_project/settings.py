@@ -34,10 +34,21 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
 ]
 
-
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'USE_SESSION_AUTH': False,
+}
 # Application definition
 
 INSTALLED_APPS = [
+    'drf_yasg',
+    'rest_framework_swagger',
     'corsheaders',
     'shop',
     'rest_framework',
