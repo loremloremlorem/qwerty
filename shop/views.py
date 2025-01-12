@@ -271,6 +271,7 @@ class LoginWithCSRFAPIView(APIView):
             return Response({
                 'message': 'Успешный вход',
                 'csrf_token': csrf_token
+                
             }, status=HTTP_200_OK)
         else:
             return Response(
