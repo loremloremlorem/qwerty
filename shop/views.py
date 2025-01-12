@@ -271,7 +271,7 @@ class LoginWithCSRFAPIView(APIView):
             return Response({
                 'message': 'Успешный вход',
                 'user':{
-                    "id":id
+                    "id":username
                 },
                 'csrf_token': csrf_token
                 
