@@ -114,7 +114,7 @@ def order_history(request):
 
 
 class ProductListAPIView(generics.ListAPIView):
-    queryset = Product.objects.filter(available=True)
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 class ProductDetailAPIView(generics.RetrieveAPIView):

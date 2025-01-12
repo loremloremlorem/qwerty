@@ -4,12 +4,12 @@ from .models import Product, Category, CartItem, Order, OrderItem
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'available', 'category']
+        fields = ['id', 'name', 'description', 'price', 'image', 'category']
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'slug']
+        fields = ['id', 'name', 'slug', 'image']
 
 class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
@@ -32,7 +32,3 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['id', 'user', 'created_at', 'paid', 'items', 'get_total_cost']
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ['id', 'name', 'slug']
