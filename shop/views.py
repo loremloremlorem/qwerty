@@ -270,6 +270,9 @@ class LoginWithCSRFAPIView(APIView):
             csrf_token = get_token(request)  # Генерация нового CSRF-токена
             return Response({
                 'message': 'Успешный вход',
+                'user':{
+                    "id":id
+                },
                 'csrf_token': csrf_token
                 
             }, status=HTTP_200_OK)
