@@ -127,13 +127,14 @@ from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
 class CartAPIView(APIView):
     permission_classes = [IsAuthenticated]
-
+    
     def get(self, request):
         cart_items = CartItem.objects.filter(user=request.user)
         serializer = CartItemSerializer(cart_items, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
     def post(self, request):
+        csrf_token = get_token(request)
         product_id = request.data.get('product_id')
         quantity = request.data.get('quantity', 1)
         try:
@@ -142,7 +143,7 @@ class CartAPIView(APIView):
             if not created:
                 cart_item.quantity += int(quantity)
             cart_item.save()
-            return Response({'message': 'Item added to cart'}, status=HTTP_200_OK)
+            return Response({'message': 'Item added to cart','csrf_token':csrf_token}, status=HTTP_200_OK)
         except Product.DoesNotExist:
             return Response({'error': 'Product not found'}, status=HTTP_400_BAD_REQUEST)
     def delete(self, request):
@@ -152,9 +153,10 @@ class CartAPIView(APIView):
     
         if product_id:
             try:
+                csrf_token = get_token(request)
                 cart_item = CartItem.objects.get(user=request.user, product_id=product_id)
                 cart_item.delete()
-                return Response({'message': 'Товар удалён из корзины'}, status=HTTP_204_NO_CONTENT)
+                return Response({'message': 'Товар удалён из корзины','csrf_token':csrf_token}, status=HTTP_204_NO_CONTENT)
             except CartItem.DoesNotExist:
                 return Response({'error': 'Товар в корзине не найден'}, status=HTTP_400_BAD_REQUEST)
 
@@ -181,6 +183,7 @@ class OrderDeleteAPIView(APIView):
 
             # Проверяем, что пользователь - владелец заказа или администратор
             if order.user != request.user and not request.user.is_staff:
+               
                 return Response(
                     {'error': 'Вы не можете удалить этот заказ'},
                     status=HTTP_400_BAD_REQUEST
@@ -195,8 +198,10 @@ class OrderDeleteAPIView(APIView):
 
             # Удаляем заказ
             order.delete()
+            csrf_token = get_token(request)
             return Response(
-                {'message': 'Заказ удалён'},
+                {'message': 'Заказ удалён',
+                "csrf_token":csrf_token},
                 status=HTTP_204_NO_CONTENT
             )
 
@@ -215,7 +220,8 @@ class OrderAPIView(APIView):
             try:
                 order = Order.objects.get(id=order_id, user=request.user)
                 serializer = OrderSerializer(order)
-                return Response(serializer.data, status=200)
+                csrf_token = get_token(request)
+                return Response({'csrf_token':csrf_token}, serializer.data, status=200)
             except Order.DoesNotExist:
                 return Response({'error': 'Заказ не найден'}, status=400)
 
@@ -270,9 +276,7 @@ class LoginWithCSRFAPIView(APIView):
             csrf_token = get_token(request)  # Генерация нового CSRF-токена
             return Response({
                 'message': 'Успешный вход',
-                'user':{
-                    "id":user
-                },
+                
                 'csrf_token': csrf_token
                 
             }, status=HTTP_200_OK)
