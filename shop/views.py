@@ -268,7 +268,12 @@ class LoginWithCSRFAPIView(APIView):
         """Вход пользователя с использованием CSRF."""
         username = request.data.get('username')
         password = request.data.get('password')
-
+        
+        if not username or not password:
+            return Response(
+                {'error': 'Необходимо указать имя пользователя и пароль'},
+                status=HTTP_400_BAD_REQUEST
+            )
         # Проверяем учетные данные
         user = authenticate(username=username, password=password)
         if user is not None:
