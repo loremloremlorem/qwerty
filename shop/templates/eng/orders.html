@@ -1,0 +1,94 @@
+{% extends 'eng/layout.html' %}
+{% load static %}
+
+{% block content%}
+<div class="navigator">
+    <div class="navigator-blok">
+        <a href="{% url 'categories' %}">Main</a>
+        <i class="fa-solid fa-angle-right navigator__slesh"></i>
+        <p class="navigator__p" href="">Orders</p>
+
+        
+    </div>
+</div>
+<div class="cart">
+    <div class="cart-blok">
+        <div class="cart-blok__section cart-blok__section__header">
+            <div class="cart-blok__section-part cart-blok__section-part-1 cart-blok__section-part-main"
+                style="color: 'var(--main-color)'">
+                Id
+            </div>
+            <div class="cart-blok__section-part cart-blok__section-part-1" style="color: 'var(--main-color)'">
+                Product
+            </div>
+            <div class="cart-blok__section-part cart-blok__section-part-1" style="color: 'var(--main-color)'">
+                Quantity
+            </div>
+            <div class="cart-blok__section-part cart-blok__section-part-1" style="color: 'var(--main-color)'">
+                Price
+            </div>
+            <div class="cart-blok__section-part cart-blok__section-part-1" style="color: 'var(--main-color)'">
+                Date
+            </div>
+            <!-- <div class="cart-blok__section-part__end"></div> -->
+        </div>
+        <br />
+        <hr />
+        <br />
+        <div class="cart-blok__section cart-blok__section-2">
+            <div class="cart-blok__section-part cart__xz">
+                <p>1</p>
+            </div>
+            <div class="cart-blok__section-part cart-blok__section-part-main">
+                <div class="cart-blok__section-part__footer">
+                    <div class="cart-blok__section-part__footer__image">
+                        <a href=""> <!-- Ссылка на детальную страницу этого продукта -->
+                            <img src="{% static 'images/category.jpg' %}" alt="Langheinrich" />
+                        </a>
+                    </div>
+                    <a href=""> <!-- Ссылка на детальную страницу этого продукта -->
+                        <h3>Product Name</h3> <!-- Название продукта -->
+                    </a>
+                    <!-- Удалить эту хуйню (продукт) из истории
+                            <i class="fa-solid fa-trash cart__invisible cart-blok__section-part__end__icon"></i>
+                            -->
+                </div>
+            </div>
+            <div class="cart__invisible">
+                <a to="/">
+                    <h2 style=" margin: '5px 0 20px 0' ">Product Name</h2> <!-- Название продукта -->
+                </a>
+            </div>
+            <div class="cart-blok__section-part cart-blok__section-part-1 cart__invisible">
+                <p>
+                    <span>Id:</span>
+                    <span>1</span>
+                </p>
+            </div>
+            <div class="cart-blok__section-part cart-blok__section-part-1">
+                <p>
+                    <span class='cart__invisible'>Quantity: </span>
+                    50 <!-- Quantity -->
+                </p>
+            </div>
+            <div class="cart-blok__section-part cart-blok__section-part-1">
+                <p>
+                    <span class="cart__invisible">Price:</span>
+                    <span id="price">20000</span> UZS <!-- Цена продукта -->
+                </p>
+            </div>
+            <div class="cart-blok__section-part cart-blok__section-part-1">
+                <p><span class="cart__invisible">Date:</span> 17.01.2025</p>
+            </div>
+            <!-- Удалить эту хуйню (продукт) из истории
+                    <div class="cart-blok__section-part__end">
+                        <i class="fa-solid fa-xmark cart-blok__section-part__end__icon"></i>
+                    </div>
+                    -->
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="{% static 'js/products.js' %}"></script>
+{% endblock %}

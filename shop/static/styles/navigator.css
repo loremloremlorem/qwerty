@@ -1,0 +1,39 @@
+.navigator {
+    margin-top: 30px;
+}
+
+.navigator-blok {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+}
+
+.navigator-blok a {
+    text-decoration: none;
+    color: var(--text-color);
+    transition: .5s;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 130%;
+}
+
+.navigator-blok a:hover {
+    opacity: .7;
+}
+
+.navigator__p {
+    font-size: 130%;
+    color: var(--main-color);
+}
+
+.navigator__slesh {
+    font-size: 110%;
+    margin: 0 5px;
+}
+
+@media (max-width: 768px) {
+    .navigator-blok {
+        justify-content: center;
+    }
+}

@@ -1,0 +1,43 @@
+{% extends 'eng/layout.html' %}
+{% load static %}
+
+{% block content%}
+<div class="navigator">
+    <div class="navigator-blok">
+        <a href="{% url 'categories' %}">Main</a>
+        <i class="fa-solid fa-angle-right navigator__slesh"></i>
+        {% if product.category %}
+    <a href="{% url 'products' %}">{{ product.category }}</a>
+
+        {% endif %}
+    </div>
+</div>
+
+<div class="products">
+    <div class="products-blok">
+        {% for product in products %}
+        <div class="products-blok__section">
+            <div class="products-blok__section__image">
+                <a href="{% url 'detail' %}"> <!-- Ссылка на детальную страницу этого продукта -->
+                    <img src="{{ product.image.url }}" alt="" />
+                </a>
+            </div>
+            <a href="{% url 'detail' %}"> <!-- Ссылка на детальную страницу этого продукта -->
+                <h2>{{ product.name }}</h2>
+            </a>
+            <div class="products-blok__container">
+                <div class="products-blok__container__section">
+                    <i class="fa-solid fa-tag products-blok__container__section__icon"></i>
+                    <p>
+                        Price: <span id="price" style="color: blue; font-weight: bold">{{ product.price }}</span> UZS
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<script src="{% static 'js/products.js' %}"></script>
+{% endblock %}

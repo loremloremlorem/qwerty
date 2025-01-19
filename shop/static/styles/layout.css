@@ -1,0 +1,130 @@
+.layout {
+    min-height: 100vh;
+    margin: 20px 150px;
+    background-color: var(--bg-white-color);
+
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.layout-blok {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.layout-blok__section {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #fff;
+    width: 240px;
+}
+
+.layout-blok__section__image {
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.layout-blok__section a {
+    text-decoration: none;
+}
+
+.layout-blok__section__image img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.layout-blok__section__image img:hover {
+    transform: scale(1.1)
+}
+
+.layout-blok__section h2 {
+    color: var(--main-color);
+    transition: .5s;
+}
+
+.layout-blok__section h2:hover {
+    opacity: .7;
+}
+
+.layout-blok__section__footer {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.layout-blok__section__footer__icon {
+    color: var(--text-color);
+}
+
+.layout-blok__section__footer p {
+    font-size: 90%;
+    color: var(--text-color);
+}
+
+.layout-blok__section__footer p span {
+    color: #000;
+    background-color: yellow;
+    padding: 0 5px;
+}
+
+@media (max-width: 1116px) {
+    .layout-blok {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .layout {
+        margin: 15px 10px;
+        padding: 15px;
+        border-radius: 0;
+    }
+
+    .layout-blok__section {
+        padding: 20px 15px;
+    }
+}
+
+@media (max-width: 568px) {
+    .layout-blok__section {
+        border-radius: 20px;
+        background-color: #fff;
+        width: 150px;
+    }
+
+    .layout-blok__section img {
+        width: 150px;
+        height: 75px;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border-radius: 20px;
+        transition: 1s;
+        cursor: pointer;
+    }
+
+    .layout-blok__section h2 {
+        font-size: 100%;
+    }
+
+    .layout-blok__section__footer p {
+        font-size: 70%;
+        color: #424242;
+    }
+
+    .layout-blok__section__footer {
+        gap: 5px;
+    }
+}

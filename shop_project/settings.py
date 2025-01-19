@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -96,7 +96,7 @@ ROOT_URLCONF = 'shop_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -168,3 +168,7 @@ import os
 
 MEDIA_URL = '/media/'  # URL для доступа к медиа-файлам
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Путь к папке для хранения файлов
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static/',
+]

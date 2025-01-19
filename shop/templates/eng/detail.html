@@ -1,0 +1,74 @@
+{% extends 'eng/layout.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="navigator">
+    <div class="navigator-blok">
+        <a href="{% url 'categories' %}">Main</a>
+        <i class="fa-solid fa-angle-right navigator__slesh"></i>
+        <a href="{% url 'categories' %}">{{category.name}}</a>
+        <!-- Покажи название категории к котрому соотвествует этот продукт -->
+        <i class="fa-solid fa-angle-right navigator__slesh"></i>
+        <p class="navigator__p">Products</p>
+    </div>
+</div>
+<div class='detail'>
+    <div class="detail-blok">
+        {% for product in products %}
+        <div class="detail-blok__section-1">
+            <div class="detail-blok__section-1__image">
+                <img src="{{ product.image.url }}" alt="Langheinrich" />
+            </div>
+        </div>
+        <div class="detail-blok__section-2">
+            <h1>Product Name</h1>
+            <div class="detail-blok__section-2__header">
+                <button id="openModalButton" class="detail-blok__section-2__header__button-1">Order</button>
+
+                <div class="modal" id="modal" style="display: none;">
+                    <div class="modal-content" id="modalContent">
+                        <div id="modalHeader" class="modal-content__header">
+                            <h2>Order Product Name</h2>
+                            <i id="closeModalButton" class="fa-solid fa-xmark close-button"></i>
+                        </div>
+                        <form id="orderForm">
+                            <div class="form-group">
+                                <label for="quantity">Enter Quantity</label>
+                                <input type="number" id="quantity" name="quantity" min="20" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Choose Date</label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+                            <div>
+                                <p>Price: 100 000 UZS</p>
+                            </div>
+                            <button type="submit" class="submit-button">Order</button>
+                        </form>
+                    </div>
+                </div>
+                <button class="detail-blok__section-2__header__button-2">
+                    Add To Cart
+                </button>
+            </div>
+            <div class="detail-blok__section-2__container">
+                <div class="detail-blok__section-2__container-part">
+                    <p>
+                        Price: <span id="price" style="color: blue; font-weight: bold">20000</span> UZS
+                    </p>
+                </div>
+                <p class='detail__description'>Description Lorem ipsum dolor sit, amet consectetur
+                    adipisicing elit. Fuga, quas?
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<script src="{% static 'js/products.js' %}"></script>
+<script src="{% static 'js/order.js' %}"></script>
+
+{% endblock %}

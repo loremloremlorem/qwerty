@@ -1,0 +1,25 @@
+.orders {
+    margin-top: 30px;
+}
+
+.orders-blok {
+    display: flex;
+    flex-direction: column;
+}
+
+.orders-blok__section {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 0 0 20px;
+    border-bottom: 1px solid var(--text-color);
+}
+
+.orders-blok__section-1 {
+    margin-bottom: 30px;
+}
+
+.orders-blok__section-part {
+    width: 100px;
+}

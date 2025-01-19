@@ -1,0 +1,133 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Langheinrich - Contacts</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/about.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/contacts1.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/contacts.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/contacts2.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/detail.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/landing.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/navigator.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/orders.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/products.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/section.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/video.css' %}">
+</head>
+
+<body>
+    <div class="contacts">
+        <div class="contacts-blok">
+            <div class="contacts-blok__section">
+                <a href="{% url 'index' %}"><img src="{% static 'images/logo.jpg' %}" alt="" /></a>
+            </div>
+            <div class="contacts-blok__section">
+                <div class="contacts-blok__section__container">
+                    <div class="contacts-blok__section__container-part">
+                        <a href="{% url 'index' %}">
+                            <i class="fa-solid fa-house-chimney contacts-blok__section__container-part__icon"></i>
+                            <p class='contacts-blok__section__container-part__p1'>HOME</p>
+                        </a>
+                    </div>
+                    <div class="contacts-blok__section__container-part">
+                        <p class='contacts-blok__section__container-part__p1'>/</p>
+                    </div>
+                    <div class="contacts-blok__section__container-part">
+                        <p class='contacts-blok__section__container-part__p2'>CONTACT US</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACTS 1 -->
+    <div class='contacts1'>
+        <h1>Explore Our Office Worldwide</h1>
+        <div class="contacts1-blok">
+            <div class='contacts1-blok__section'>
+                <div class="contacts1-blok__section__image">
+                    <img src="{% static 'images/offices/germany.png' %}" alt="Langheinrich" />
+                </div>
+                <p class='contacts1-blok__section__p1'>Berlin</p>
+                <a href="tel:+ 123 456 7890">
+                    <p class='contacts1-blok__section__p2'>+ 123 456 7890</p>
+                </a>
+                <a href="mailto:sales@example.com">
+                    <p class='contacts1-blok__section__p3'>sales@example.com</p>
+                </a>
+                <p class='contacts1-blok__section__p4'>A-1, Envanto Headquarters, Melbourne, Australia.</p>
+            </div>
+            <div class='contacts1-blok__section'>
+                <div class="contacts1-blok__section__image">
+                    <img src="{% static 'images/offices/uzbekistan.png' %}" alt="Langheinrich" />
+                </div>
+                <p class='contacts1-blok__section__p1'>Tashkent</p>
+                <a href="tel:+ 123 456 7890">
+                    <p class='contacts1-blok__section__p2'>+ 123 456 7890</p>
+                </a>
+                <a href="mailto:sales@example.com">
+                    <p class='contacts1-blok__section__p3'>sales@example.com</p>
+                </a>
+                <p class='contacts1-blok__section__p4'>A-1, Envanto Headquarters, Melbourne, Australia.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACTS 2 -->
+    <div class='contacts2'>
+        <div class="contacts2-blok">
+            <div class="contacts2-blok__section">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2637.296119635555!2d13.65669747629147!3d48.623315271301294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47748b7810744701%3A0xf529d9c5aa5f754b!2zTGFuZ2hlaW5yaWNoc3RyYcOfZSwgOTQwNTEgSGF1emVuYmVyZywg0JPQtdGA0LzQsNC90LjRjw!5e0!3m2!1sru!2s!4v1736752352818!5m2!1sru!2s"
+                    width="100%" height="450" style="border: 0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade" title="Google Map">
+                </iframe>
+            </div>
+            <div class="contacts2-blok__section contacts2-blok__section-2">
+                <p>LET’S CONNECT</p>
+                <h1>SEND YOUR MESSAGE</h1>
+                <br />
+                <form class='contacts2-blok__section__form'>
+                    <div class="contacts2-blok__section__form-part">
+                        <input type="text" placeholder='Your Name*' required />
+                        <input type="tel" placeholder='Phone Number*' required />
+                    </div>
+                    <div class="contacts2-blok__section__form-part">
+                        <input type="email" placeholder='Your Email*' required />
+                    </div>
+                    <div class="contacts2-blok__section__form-part">
+                        <textarea name="message" id="message" placeholder='Message' required></textarea>
+                    </div>
+                    <button type='submit'>SUBMIT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class='footer'>
+        <div class="footer-blok">
+            <p>Copyright © 2022 <span>Langheinrich</span> Designed by Akbar Soft.</p>
+            <div class='footer-blok__container'>
+                <a href='{% url "contacts" %}'>Contacts</a>
+                <div>/</div>
+                <p id="openModal">Login</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

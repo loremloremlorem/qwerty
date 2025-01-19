@@ -15,6 +15,35 @@ from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
+def index(request):
+    return render(request, 'eng/index.html')
+def cart(request):
+    return render(request, 'eng/cart.html')
+def categories(request):
+    categories =Category.objects.all()
+    return render(request, 'eng/categories.html', {'categories':categories})
+def contacts(request):
+    return render(request, 'eng/contacts.html')
+def detail(request):
+    product_id = request.GET.get('product')
+    products = Product.objects.filter(id=product_id)
+    return render(request, 'eng/detail.html', {'products': products})
+# def products(request):
+#     return render(request, 'eng/products.html')
+def products(request):
+    category_id = request.GET.get('category')  # Получаем ID категории из GET-параметра
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
+
+    categories = Category.objects.all()  # Для отображения списка категорий
+    return render(request, 'eng/products.html', {
+        'products': products,
+        'categories': categories
+    })
+def orders(request):
+    return render(request, 'eng/orders.html')   
 
 
 @login_required
@@ -285,6 +314,7 @@ class LoginWithCSRFAPIView(APIView):
                 'csrf_token': csrf_token
                 
             }, status=HTTP_200_OK)
+            
         else:
             return Response(
                 {'error': 'Неверное имя пользователя или пароль'},

@@ -1,0 +1,29 @@
+{% extends 'eng/layout.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class='layout-blok'>
+    {% for category in categories %}
+    <div class="layout-blok__section">
+        <div class="layout-blok__section__image">
+            <a href="{% url 'products' %}">
+                <!-- Ссылка на страницу products где отображаются только проудкты относившиеся к этой категории -->
+                <img src="{{ category.image.url }}" alt="Langheinrich Product" />
+            </a>
+        </div>
+        <a href="{% url 'products' %}"> <!-- Ссылка на страницу products где отображаются только проудкты относившиеся к этой категории -->
+            <h2>{{ category.name }}</h2>
+        </a>
+        <div class="layout-blok__section__footer">
+            <i class="fa-solid fa-clipboard-list layout-blok__section__footer__icon"></i>
+            <p>Products <span>25</span></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<script src="{% static 'js/navbar.js' %}"></script>
+{% endblock %}
